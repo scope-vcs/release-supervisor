@@ -157,7 +157,7 @@ remain in local audit history. Completed runs with lifted dispositions need
 no further direct lookup after leaving the recent release listing.
 
 Verify Surface identity (`adam-blumoff-surface-book-2`) and use delivered GitHub
-main. Run `./dev/check ops` and `./dev/check guardrails`. Create replacement tasks
+main. Run `python3 -B -m unittest discover -p 'test_*.py'`. Create replacement tasks
 paused with stable client request IDs and bindings to the existing conversation.
 Preserve `supervision.json`, `daily-dispatch.json`, `image-pin-refresh.json`,
 receipts, inboxes, and every repair worktree. Never initialize existing state.
@@ -167,8 +167,8 @@ its installed implementation until cutover:
 
 ```sh
 install -d -m 700 ~/.local/share/scope-automation/bounded-release-supervisor
-install -m 600 deploy/automation/deployment_*.py deploy/automation/image_pin_refresh.py deploy/automation/heartbeat.py ~/.local/share/scope-automation/bounded-release-supervisor/
-install -m 644 deploy/automation/scope-deployment-session.service ~/.config/systemd/user/
+install -m 600 deployment_*.py image_pin_refresh.py heartbeat.py ~/.local/share/scope-automation/bounded-release-supervisor/
+install -m 644 scope-deployment-session.service ~/.config/systemd/user/
 systemctl --user daemon-reload
 ```
 
@@ -234,19 +234,3 @@ existing state on an upgrade; do not run these initialization commands. Continue
 the verified cutover above, omitting old timer retirement only if none exists.
 If first-install preparation was interrupted, inspect the saved JSON and run
 only the initialization command for a missing file; preserve existing state.
-
-## Main checks
-
-After the aggregate check has been committed to main, configure protection using
-the checked-in payload and enable GitHub auto-merge:
-
-```sh
-gh api --method PUT repos/scope-vcs/scope-vcs/branches/main/protection --input deploy/automation/main-protection.json
-gh api --method PATCH repos/scope-vcs/scope-vcs -F allow_auto_merge=true
-```
-
-This requires the GitHub Actions `Required PR checks` result, including for
-administrators, without reviewer approvals, up-to-date branch rebuilds, merge
-queues, or post-merge CI. Force pushes and main deletion are disabled. Read the
-settings back after applying them. Local tests remain required for explicitly
-authorized direct-main changes made before protection is enabled.

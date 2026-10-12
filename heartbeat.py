@@ -101,7 +101,7 @@ def check(value, repo=REPO, max_age=1200, now=None):
                  "This issue closes automatically after a healthy check.\n\n"
                  "While this issue is open, no daily release is dispatched and no failed release is "
                  "repaired automatically. The assignee owns both; follow \"While Surface is offline\" in "
-                 f"https://github.com/{repo}/blob/main/deploy/automation/OPERATIONS.md.")
+                 f"https://github.com/scope-vcs/release-supervisor/blob/main/OPERATIONS.md.")
     return False
 
 
@@ -230,7 +230,7 @@ def observe(value, repo=REPO, now=None, max_age=1200):
                      "Inspect session.json, triggers.json, signed webhook deliveries, T3 task execution, "
                      "and scope-deployment-session.service. Idle daytime is healthy. See "
                      "\"While Surface is offline\" in "
-                     f"https://github.com/{repo}/blob/main/deploy/automation/OPERATIONS.md.")
+                     f"https://github.com/scope-vcs/release-supervisor/blob/main/OPERATIONS.md.")
         healthy = False
     else:
         for issue in issues(repo):
